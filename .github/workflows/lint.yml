@@ -73,5 +73,9 @@ jobs:
           # Opcional: si quieres que revise tus archivos de GitHub Actions
           VALIDATE_GITHUB_ACTIONS: true
 
+          # Activa el linter de Ansible
+          VALIDATE_ANSIBLE: true
+          VALIDATE_YAML: true
+
           # Solo valida los archivos que cambiaste en este push/PR
           VALIDATE_ALL_CODEBASE: false
