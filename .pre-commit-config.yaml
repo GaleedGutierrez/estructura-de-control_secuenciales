@@ -1,0 +1,57 @@
+default_install_hook_types:
+    - pre-commit
+    - commit-msg
+
+repos:
+    # 1. EQUIVALENTE A commit-msg (commitlint)
+    - repo: https://github.com/compilerla/conventional-pre-commit
+      rev: v3.1.0
+      hooks:
+          - id: conventional-pre-commit
+            stages: [commit-msg]
+            args: [] # Podés pasarle config de tipos de commit aquí
+
+    # 2. Utilidades básicas de limpieza (actualizadas a una versión más reciente)
+    - repo: https://github.com/pre-commit/pre-commit-hooks
+      rev: v6.0.0
+      hooks:
+          - id: check-yaml
+          - id: check-toml
+          - id: check-json
+          - id: end-of-file-fixer
+          - id: trailing-whitespace
+          - id: check-added-large-files
+            args: ["--maxkb=5000"] # Frena archivos de más de 5MB
+          - id: check-merge-conflict
+          - id: debug-statements
+
+    # 3. Ruff: Reemplaza a Black (formateo) y a ESLint (linting)
+    - repo: https://github.com/astral-sh/ruff-pre-commit
+      rev: v0.3.0
+      hooks:
+          # Ejecuta el linter y arregla lo que puede automáticamente
+          - id: ruff
+            args: [--fix]
+          # Ejecuta el formateador respetando tus tabs
+          - id: ruff-format
+
+    # 4. TUS SCRIPTS PERSONALIZADOS (check-for-dupes)
+    - repo: local
+      hooks:
+          - id: check-for-dupes
+            name: Check for duplicates
+            entry: pylint ./
+            language: system
+            types: [python]
+            pass_filenames: false
+            stages: [pre-commit, pre-push]
+
+    # # 5. EQUIVALENTE A pre-push (Tests pesados)
+    # - repo: local
+    #   hooks:
+    #       - id: pytest-e2e
+    #         name: Run E2E Tests
+    #         entry: pytest tests/e2e # Tu comando de testing
+    #         language: system
+    #         pass_filenames: false
+    #         stages: [push]
