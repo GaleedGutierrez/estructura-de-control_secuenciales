@@ -1,15 +1,20 @@
-# Equivalente a las propiedades base de package.json
 [project]
 name = "estructura-de-control-secuenciales"
 version = "0.1.0"
 description = "TP N°1 - Estructuras de control secuenciales"
-requires-python = ">=3.12"
+requires-python = ">=3.14"
+license = "MIT"
+keywords = ["algoritmos", "estructuras-de-datos", "python"]
+authors = [{ name = "Galeed Gutierrez", email = "galeedeveloper@gmail.com" }]
 
-# Equivalente a "devDependencies" en package.json
+[project.urls]
+Homepage = "https://github.com/GaleedGutierrez/estructura-de-control_secuenciales#readme"
+Repository = "https://github.com/GaleedGutierrez/estructura-de-control_secuenciales.git"
+Issues = "https://github.com/GaleedGutierrez/estructura-de-control_secuenciales/issues"
+
 [project.optional-dependencies]
 dev = ["pre-commit", "ruff", "pylint", "commit-msg"]
 
-# Equivalente al campo "type": "module" / configuración del build system
 [build-system]
 requires = ["setuptools"]
 build-backend = "setuptools.backends._legacy:_Backend"
