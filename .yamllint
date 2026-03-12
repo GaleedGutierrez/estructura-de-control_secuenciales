@@ -1,0 +1,30 @@
+---
+# .yamllint
+extends: default
+
+rules:
+  # Aumentamos el límite a 120. En Data Science las rutas de archivos
+  # y los nombres de modelos suelen ser largos.
+  line-length:
+    max: 120
+    level: warning
+
+  # Ansible usa mucho "yes/no" y "true/false".
+  # Esta regla evita que el linter se queje por eso.
+  truthy:
+    allowed-values: ["true", "false", "yes", "no"]
+    check-keys: false
+
+  # Permite que los comentarios no tengan que ser perfectos,
+  # pero que mantengan una estructura mínima.
+  comments:
+    level: warning
+    require-starting-space: true
+
+  # Para que los indentados de las listas no sean un dolor de cabeza.
+  indentation:
+    spaces: 2
+    indent-sequences: consistent
+
+  # Evita errores si dejas espacios al final de una línea (clásico al scriptear rápido).
+  trailing-spaces: enable

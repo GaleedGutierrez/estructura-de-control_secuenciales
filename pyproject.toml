@@ -13,7 +13,7 @@ Repository = "https://github.com/GaleedGutierrez/estructura-de-control_secuencia
 Issues = "https://github.com/GaleedGutierrez/estructura-de-control_secuenciales/issues"
 
 [project.optional-dependencies]
-dev = ["pre-commit", "ruff", "pylint", "commit-msg"]
+dev = ["pre-commit", "ruff", "pylint", "commit-msg", "yamllint"]
 
 [build-system]
 requires = ["setuptools"]

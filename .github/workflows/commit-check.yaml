@@ -1,0 +1,25 @@
+---
+name: 📝 Commit Check
+
+on: [push, pull_request]
+
+jobs:
+  check-commit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 👍 Checkout code
+        uses: actions/checkout@v4
+        with:
+          # Importante para que pueda leer el historial de commits
+          fetch-depth: 0
+
+      - name: 🐍 Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: 📥 Install Commitizen
+        run: pip install commitizen
+
+      - name: 🔍 Check Commit Message
+        run: cz check --rev-range HEAD^1..HEAD
