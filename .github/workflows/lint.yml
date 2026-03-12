@@ -43,46 +43,34 @@ jobs:
           pylint $(git ls-files '*.py')
 
   build:
-    name: 💐 Super Linter
+    name: 🐍 Python Super Linter
     runs-on: ubuntu-latest
 
     permissions:
       contents: read
       packages: read
-      # To report GitHub Actions status checks
       statuses: write
 
     steps:
       - name: 👍 Checkout code
         uses: actions/checkout@v4
         with:
-          # super-linter needs the full git history to get the
-          # list of files that changed across commits
           fetch-depth: 0
 
-      - name: 📥 Install Dependencies
-        run: npm ci
+      # Eliminamos el paso de npm ci ya que es para JS/TS
 
       - name: 💐 Super-linter
-        uses: super-linter/super-linter@v7.1.0 # x-release-please-version
+        uses: super-linter/super-linter@v7.1.0
         env:
-          # To report GitHub Actions status checks
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          VALIDATE_EDITORCONFIG: false
-          VALIDATE_CSS: false
-          VALIDATE_CSS_PRETTIER: false
-          VALIDATE_HTML: false
-          VALIDATE_HTML_PRETTIER: false
-          VALIDATE_TSX: false
-          VALIDATE_TYPESCRIPT_ES: false
-          VALIDATE_TYPESCRIPT_PRETTIER: false
-          VALIDATE_TYPESCRIPT_STANDARD: false
-          VALIDATE_JAVASCRIPT_ES: false
-          VALIDATE_JAVASCRIPT_PRETTIER: false
-          VALIDATE_JAVASCRIPT_STANDARD: false
-          VALIDATE_JSON: false
-          VALIDATE_JSON_PRETTIER: false
-          VALIDATE_JSONC: false
-          VALIDATE_JSONC_PRETTIER: false
-          VALIDATE_JSCPD: false
-          VALIDATE_MARKDOWN_PRETTIER: false
+
+          # --- CONFIGURACIÓN DE PYTHON ---
+          VALIDATE_PYTHON_PYLINT: true
+          VALIDATE_PYTHON_RUFF: true
+
+          # Desactivamos otros linters de Python para que no hagan ruido
+          # ya que Ruff se encarga de casi todo (Black, Isort, Flake8)
+          VALIDATE_PYTHON_BLACK: false
+          VALIDATE_PYTHON_FLAKE8: false
+          VALIDATE_PYTHON_ISORT: false
+          VALIDATE_PYTHON_MYPY: true # Muy recomendado para Data Science con tipos
