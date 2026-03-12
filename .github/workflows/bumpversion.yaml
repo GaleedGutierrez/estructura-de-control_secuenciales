@@ -1,30 +1,24 @@
 ---
-name: 📝 Bump version
+name: 📝 Commit Check
 
-on:
-    push:
-        branches:
-            - master
-
-permissions:
-    pull-requests: read
-    contents: read
+on: [pull_request]
 
 jobs:
-    bump_version:
-        if: "!startsWith(github.event.head_commit.message, 'bump:')"
+    check-commit:
         runs-on: ubuntu-latest
-        name: "Bump version and create changelog with commitizen"
         steps:
-            - name: Check out
-              uses: actions/checkout@v5
+            - name: 👍 Checkout code
+              uses: actions/checkout@v4
               with:
-                  fetch-depth: 0
-                  token: "${{ secrets.GITHUB_TOKEN }}"
-            - id: cz
-              name: Create bump and changelog
-              uses: commitizen-tools/commitizen-action@master
+                  fetch-depth: 0 # Importante para que pueda leer el historial de commits
+
+            - name: 🐍 Setup Python
+              uses: actions/setup-python@v5
               with:
-                  github_token: ${{ secrets.GITHUB_TOKEN }}
-            - name: Print Version
-              run: echo "Bumped to version ${{ steps.cz.outputs.version }}"
+                  python-version: "3.x"
+
+            - name: 📥 Install Commitizen
+              run: pip install commitizen
+
+            - name: 🔍 Check Commit Message
+              run: cz check --rev-range HEAD^1..HEAD
