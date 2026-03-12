@@ -1,0 +1,86 @@
+# ruff.toml
+
+# Asumiendo una versión moderna de Python
+target-version = "py312"
+# line-length = 88 # Ajusta según tu preferencia (Ruff usa 88 por defecto, Prettier suele usar 80)
+
+# Equivalente a tu bloque 'ignores'
+exclude = [
+	".bzr",
+	".direnv",
+	".eggs",
+	".git",
+	".mypy_cache",
+	".ruff_cache",
+	".tox",
+	".venv",
+	"__pypackages__",
+	"_build",
+	"build",
+	"dist",
+	"node_modules",
+	"venv",
+]
+
+[lint]
+# Aquí mapeamos todos tus plugins de ESLint a los conjuntos de reglas de Ruff
+select = ["ALL"]
+# select = [
+# 	"F",  # Pyflakes (Errores generales, variables no usadas -> unused-imports)
+# 	"E",  # pycodestyle errors (Estilo general)
+# 	"W",  # pycodestyle warnings
+# 	"I",  # isort (Equivalente a simple-import-sort y import-x)
+# 	"N",  # pep8-naming (Equivalente a camelcase, new-cap)
+# 	"D",  # pydocstyle (Equivalente a eslint-plugin-jsdoc / tsdoc)
+# 	"UP", # pyupgrade (Fuerza sintaxis moderna de Python)
+# 	"B",  # flake8-bugbear (Previene bugs comunes, equivalente a no-constant-binary-expression)
+# 	"A",  # flake8-builtins (Equivalente a no-extend-native)
+# 	"C4", # flake8-comprehensions (Mejores prácticas para listas/diccionarios)
+# 	# "T20", # flake8-print (Equivalente a 'no-console': 'error')
+# 	"PT",  # flake8-pytest-style (Equivalente a tus reglas de Vitest/Playwright)
+# 	"RET", # flake8-return (Equivalente a no-else-return y retornos limpios)
+# 	"SIM", # flake8-simplify (Equivalente a no-unneeded-ternary y lógicas complejas)
+# 	"ARG", # flake8-unused-arguments (Equivalente a unused-imports/no-unused-vars)
+# 	"PTH", # flake8-use-pathlib (Uso moderno de rutas)
+# 	"PL",  # Pylint (Chequeos lógicos estrictos)
+# 	"RUF", # Reglas específicas de Ruff
+# 	"ANN", # flake8-annotations (Fuerza tipado estricto, equivalente parcial a typescript-eslint)
+# ]
+fixable = ["ALL"]
+
+# Excepciones globales para no volver el linter imposible de pasar
+ignore = [
+	# "D100", # Permite omitir docstrings en el módulo principal
+	# "D104",   # Permite omitir docstrings en __init__.py
+	# "ANN401", # Permite el uso de 'Any' en tipado (equivalente a desactivar 'no-explicit-any')
+	# "W191", # Indentation contains tabs
+	# "E101",   # Indentation contains mixed spaces and tabs
+]
+
+# Equivalente a tus bloques de sobreescritura para "tests/**"
+[lint.per-file-ignores]
+"tests/**/*" = [
+	"PLR2004", # Permite "magic values" en los tests (ej. assert x == 5)
+	"S101",    # Permite el uso de 'assert' (prohibido en prod, pero obligatorio en tests)
+	"D",       # Desactiva la obligación de docstrings (JSDoc) en los tests
+	"ANN",     # Desactiva la obligación de tipado estricto en los tests
+]
+
+[lint.isort]
+# Equivalente a eslint-plugin-import-x y simple-import-sort
+combine-as-imports = true
+# known-first-party = ["tu_modulo_principal"] # Descomenta esto y pon el nombre de tu app
+
+[lint.flake8-pytest-style]
+# Equivalente estricto a vitest.configs.recommended
+fixture-parentheses = false
+mark-parentheses = false
+parametrize-names-type = "csv"
+
+[lint.pydocstyle]
+# Define el formato de tus comentarios (JSDoc equivalente)
+convention = "google" # Opciones: "google", "numpy", o "pep257"
+
+[format]
+# Este bloque es el equivalente EXACTO a eslint-plugin-prettier
+docstring-code-format = true
