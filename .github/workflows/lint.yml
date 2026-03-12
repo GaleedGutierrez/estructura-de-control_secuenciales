@@ -40,7 +40,7 @@ jobs:
       - name: "🕵️ Pylint"
         run: |
           # Pylint necesita ver las dependencias instaladas para funcionar bien
-          pylint $(git ls-files '*.py')
+          git ls-files '*.py' | xargs pylint
 
   build:
     name: 🐍 Python Super Linter
