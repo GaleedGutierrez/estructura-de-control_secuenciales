@@ -60,7 +60,7 @@ jobs:
       # Eliminamos el paso de npm ci ya que es para JS/TS
 
       - name: 💐 Super-linter
-        uses: super-linter/super-linter@v7.1.0
+        uses: super-linter/super-linter@v8.5.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
