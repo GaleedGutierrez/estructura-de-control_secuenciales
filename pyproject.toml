@@ -1,0 +1,15 @@
+# Equivalente a las propiedades base de package.json
+[project]
+name = "estructura-de-control-secuenciales"
+version = "0.1.0"
+description = "TP N°1 - Estructuras de control secuenciales"
+requires-python = ">=3.12"
+
+# Equivalente a "devDependencies" en package.json
+[project.optional-dependencies]
+dev = ["pre-commit", "ruff", "pylint", "commit-msg"]
+
+# Equivalente al campo "type": "module" / configuración del build system
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.backends._legacy:_Backend"
