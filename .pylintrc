@@ -1,0 +1,16 @@
+[MASTER]
+# Apagamos absolutamente todo
+disable=all
+# Encendemos solo el detector de copy-paste
+enable=similarities
+ignore=build,dist,lib,lib64,env,venv,ENV,env.bak,venv.bak,__pycache__,__pypackages__,htmlcov,docs,instance,target,cython_debug,site
+
+# Carpetas y archivos ocultos (.venv, .ruff_cache, etc)
+ignore-patterns=^\..+
+ignore-paths=.*\.venv/.*,.*venv/.*,.*env/.*,.*\.git/.*,.*__pycache__/.*,.*build/.*,.*dist/.*,.*node_modules/.*,.*\.ruff_cache/.*,.*\.mypy_cache/.*,.*\.pytest_cache/.*,.*\.tox/.*,.*\.eggs/.*,.*\.idea/.*,.*\.vscode/.*
+
+[SIMILARITIES]
+min-similarity-lines=15
+ignore-comments=yes
+ignore-docstrings=yes
+ignore-imports=yes
