@@ -64,13 +64,14 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-          # --- CONFIGURACIÓN DE PYTHON ---
+          # --- ESTRATEGIA DE INCLUSIÓN ---
+          # Al poner estos en true, Super-Linter entiende que
+          # DEBE IGNORAR todo lo demás automáticamente.
           VALIDATE_PYTHON_PYLINT: true
           VALIDATE_PYTHON_RUFF: true
 
-          # Desactivamos otros linters de Python para que no hagan ruido
-          # ya que Ruff se encarga de casi todo (Black, Isort, Flake8)
-          VALIDATE_PYTHON_BLACK: false
-          VALIDATE_PYTHON_FLAKE8: false
-          VALIDATE_PYTHON_ISORT: false
-          VALIDATE_PYTHON_MYPY: true # Muy recomendado para Data Science con tipos
+          # Opcional: si quieres que revise tus archivos de GitHub Actions
+          VALIDATE_GITHUB_ACTIONS: true
+
+          # Solo valida los archivos que cambiaste en este push/PR
+          VALIDATE_ALL_CODEBASE: false
