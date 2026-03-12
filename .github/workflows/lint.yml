@@ -1,0 +1,88 @@
+---
+name: 💅 Lint
+on: # yamllint disable-line rule:truthy
+  push: null
+  pull_request: null
+
+permissions:
+  contents: read
+  packages: read
+  statuses: write
+
+jobs:
+  lint:
+    name: Ruff + Pylint
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: "👍 Checkout code"
+        uses: actions/checkout@v4
+
+      - name: "🐍 Setup Python"
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12" # O la que estés usando en la facultad
+          cache: "pip" # Cachea las dependencias para que sea más rápido
+
+      - name: "📥 Install Dependencies"
+        run: |
+          python -m pip install --upgrade pip
+          pip install ruff pylint
+          # Si tienes un requirements.txt, descomenta la siguiente línea:
+          # pip install -r requirements.txt
+
+      - name: "⚡ Ruff Check (Linter)"
+        run: ruff check .
+
+      - name: "📐 Ruff Format (Prettier equivalent)"
+        run: ruff format --check .
+
+      - name: "🕵️ Pylint"
+        run: |
+          # Pylint necesita ver las dependencias instaladas para funcionar bien
+          pylint $(git ls-files '*.py')
+
+  build:
+    name: 💐 Super Linter
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      packages: read
+      # To report GitHub Actions status checks
+      statuses: write
+
+    steps:
+      - name: 👍 Checkout code
+        uses: actions/checkout@v4
+        with:
+          # super-linter needs the full git history to get the
+          # list of files that changed across commits
+          fetch-depth: 0
+
+      - name: 📥 Install Dependencies
+        run: npm ci
+
+      - name: 💐 Super-linter
+        uses: super-linter/super-linter@v7.1.0 # x-release-please-version
+        env:
+          # To report GitHub Actions status checks
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VALIDATE_EDITORCONFIG: false
+          VALIDATE_CSS: false
+          VALIDATE_CSS_PRETTIER: false
+          VALIDATE_HTML: false
+          VALIDATE_HTML_PRETTIER: false
+          VALIDATE_TSX: false
+          VALIDATE_TYPESCRIPT_ES: false
+          VALIDATE_TYPESCRIPT_PRETTIER: false
+          VALIDATE_TYPESCRIPT_STANDARD: false
+          VALIDATE_JAVASCRIPT_ES: false
+          VALIDATE_JAVASCRIPT_PRETTIER: false
+          VALIDATE_JAVASCRIPT_STANDARD: false
+          VALIDATE_JSON: false
+          VALIDATE_JSON_PRETTIER: false
+          VALIDATE_JSONC: false
+          VALIDATE_JSONC_PRETTIER: false
+          VALIDATE_JSCPD: false
+          VALIDATE_MARKDOWN_PRETTIER: false
